@@ -1,0 +1,14 @@
+strict digraph {
+"DefId(0:31 ~ softdog_rs[0217]::hrtimer_start)";
+"DefId(0:32 ~ softdog_rs[0217]::softdog_ping)";
+"DefId(0:29 ~ softdog_rs[0217]::hrtimer_active)";
+"DefId(0:28 ~ softdog_rs[0217]::ktime_set)";
+"DefId(0:34 ~ softdog_rs[0217]::softdog_start)";
+"DefId(0:30 ~ softdog_rs[0217]::hrtimer_cancel)";
+"DefId(0:33 ~ softdog_rs[0217]::softdog_stop)";
+"DefId(0:35 ~ softdog_rs[0217]::softdog_fire)";
+"DefId(0:32 ~ softdog_rs[0217]::softdog_ping)" -> "DefId(0:31 ~ softdog_rs[0217]::hrtimer_start)";
+"DefId(0:32 ~ softdog_rs[0217]::softdog_ping)" -> "DefId(0:28 ~ softdog_rs[0217]::ktime_set)";
+"DefId(0:32 ~ softdog_rs[0217]::softdog_ping)" -> "DefId(0:30 ~ softdog_rs[0217]::hrtimer_cancel)";
+"DefId(0:33 ~ softdog_rs[0217]::softdog_stop)" -> "DefId(0:30 ~ softdog_rs[0217]::hrtimer_cancel)";
+}

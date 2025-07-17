@@ -1,0 +1,29 @@
+DefId(0:30 ~ softdog_rs[0217]::hrtimer_cancel)
+Chunk root
+Here is a function:
+```rust
+pub unsafe extern "C" fn hrtimer_cancel(_t: *mut hrtimer) {
+    let msg = b"Called hrtimer_cancel()\n\0";
+    printf(msg.as_ptr() as *const i8);
+}
+```
+Here are its call sites
+Call site 1:
+```rust
+hrtimer_cancel(&mut TIMER);
+```
+Call site 2:
+```rust
+hrtimer_cancel(&mut TIMER);
+```
+
+
+Convert the function to idiomatic Rust, meaning Rust code that does not make use of features like unsafe, raw pointers, and the C API whenever possible. Do not change the function name.
+
+Follow the following format for your output: Place the function translation between the tags <FUNC> and </FUNC>. If the function signature changed in translation, its callsites will need to be modified as well. Place each callsite translation (in the same order it appears above) between <CALL> and </CALL>. Note that even if the callsite is only a single statement, the translation can be mutiple statements. For example, you may need to declare new variables, or convert between types, either before or after the call. The translation should be such that the surrounding code is not affected by the changes.
+
+
+Any functions or variables without definitions are defined elsewhere in the code. Do not attempt to redefine them or import them.
+If you are using any new functions and you need new imports for those, place them between the tags <IMPORTS> and </IMPORTS>. This should be only *new* imports. Do not include existing imports.
+DO NOT include markdown characters like "```" or "```rust" in your translation.
+----------------------------------------------------------------

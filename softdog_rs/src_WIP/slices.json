@@ -1,0 +1,151 @@
+[
+  {
+    "func_defid": "DefId(0:31 ~ softdog_rs[0217]::hrtimer_start)",
+    "span": "lib.rs:64:1: 67:2 (#0)",
+    "pieces": [
+      "lib.rs:64:1: 67:2 (#0)"
+    ],
+    "sub_chunks": [],
+    "num_lines": 4,
+    "source": "pub unsafe extern \"C\" fn hrtimer_start(_t: *mut hrtimer, time: i64, mode: i32) {\n    let msg = b\"Called hrtimer_start(): time = %lld, mode = %d\\n\\0\";\n    printf(msg.as_ptr() as *const i8, time, mode);\n}",
+    "calls": [
+      {
+        "caller": "DefId(0:32 ~ softdog_rs[0217]::softdog_ping)",
+        "span": "lib.rs:74:9: 74:65 (#0)",
+        "source": "hrtimer_start(&mut TIMER, ktime_set(SOFT_MARGIN, 0), 0);"
+      }
+    ],
+    "globals": [],
+    "imports": [],
+    "chunks": []
+  },
+  {
+    "func_defid": "DefId(0:29 ~ softdog_rs[0217]::hrtimer_active)",
+    "span": "lib.rs:53:1: 55:2 (#0)",
+    "pieces": [
+      "lib.rs:53:1: 55:2 (#0)"
+    ],
+    "sub_chunks": [],
+    "num_lines": 3,
+    "source": "pub unsafe extern \"C\" fn hrtimer_active(_t: *mut hrtimer) -> bool {\n    true\n}",
+    "calls": [],
+    "globals": [],
+    "imports": [],
+    "chunks": []
+  },
+  {
+    "func_defid": "DefId(0:28 ~ softdog_rs[0217]::ktime_set)",
+    "span": "lib.rs:48:1: 50:2 (#0)",
+    "pieces": [
+      "lib.rs:48:1: 50:2 (#0)"
+    ],
+    "sub_chunks": [],
+    "num_lines": 3,
+    "source": "pub unsafe extern \"C\" fn ktime_set(sec: i32, nsec: i32) -> i64 {\n    (sec as i64) * 1_000_000_000 + (nsec as i64)\n}",
+    "calls": [
+      {
+        "caller": "DefId(0:32 ~ softdog_rs[0217]::softdog_ping)",
+        "span": "lib.rs:74:9: 74:65 (#0)",
+        "source": "hrtimer_start(&mut TIMER, ktime_set(SOFT_MARGIN, 0), 0);"
+      }
+    ],
+    "globals": [],
+    "imports": [],
+    "chunks": []
+  },
+  {
+    "func_defid": "DefId(0:34 ~ softdog_rs[0217]::softdog_start)",
+    "span": "lib.rs:88:1: 92:2 (#0)",
+    "pieces": [
+      "lib.rs:88:1: 92:2 (#0)"
+    ],
+    "sub_chunks": [],
+    "num_lines": 5,
+    "source": "pub unsafe extern \"C\" fn softdog_start(_wdev: *mut watchdog_device) -> i32 {\n    let msg = b\"Called softdog_start()\\n\\0\";\n    printf(msg.as_ptr() as *const i8);\n    0\n}",
+    "calls": [],
+    "globals": [],
+    "imports": [],
+    "chunks": []
+  },
+  {
+    "func_defid": "DefId(0:30 ~ softdog_rs[0217]::hrtimer_cancel)",
+    "span": "lib.rs:58:1: 61:2 (#0)",
+    "pieces": [
+      "lib.rs:58:1: 61:2 (#0)"
+    ],
+    "sub_chunks": [],
+    "num_lines": 4,
+    "source": "pub unsafe extern \"C\" fn hrtimer_cancel(_t: *mut hrtimer) {\n    let msg = b\"Called hrtimer_cancel()\\n\\0\";\n    printf(msg.as_ptr() as *const i8);\n}",
+    "calls": [
+      {
+        "caller": "DefId(0:32 ~ softdog_rs[0217]::softdog_ping)",
+        "span": "lib.rs:73:9: 73:36 (#0)",
+        "source": "hrtimer_cancel(&mut TIMER);"
+      },
+      {
+        "caller": "DefId(0:33 ~ softdog_rs[0217]::softdog_stop)",
+        "span": "lib.rs:81:5: 81:32 (#0)",
+        "source": "hrtimer_cancel(&mut TIMER);"
+      }
+    ],
+    "globals": [],
+    "imports": [],
+    "chunks": []
+  },
+  {
+    "func_defid": "DefId(0:32 ~ softdog_rs[0217]::softdog_ping)",
+    "span": "lib.rs:71:1: 77:2 (#0)",
+    "pieces": [
+      "lib.rs:71:1: 77:2 (#0)"
+    ],
+    "sub_chunks": [],
+    "num_lines": 7,
+    "source": "pub unsafe extern \"C\" fn softdog_ping(wdev: *mut watchdog_device) -> i32 {\n    if hrtimer_active(&mut TIMER) {\n        hrtimer_cancel(&mut TIMER);\n        hrtimer_start(&mut TIMER, ktime_set(SOFT_MARGIN, 0), 0);\n    }\n    0\n}",
+    "calls": [],
+    "globals": [
+      {
+        "span": "lib.rs:41:1: 44:3 (#0)",
+        "source": "static mut TIMER: hrtimer = hrtimer {\n    dummy: 0,\n    function: None,\n};"
+      },
+      {
+        "span": "lib.rs:33:1: 33:34 (#0)",
+        "source": "static mut SOFT_MARGIN: i32 = 10;"
+      }
+    ],
+    "imports": [],
+    "chunks": []
+  },
+  {
+    "func_defid": "DefId(0:33 ~ softdog_rs[0217]::softdog_stop)",
+    "span": "lib.rs:80:1: 85:2 (#0)",
+    "pieces": [
+      "lib.rs:80:1: 85:2 (#0)"
+    ],
+    "sub_chunks": [],
+    "num_lines": 6,
+    "source": "pub unsafe extern \"C\" fn softdog_stop(_wdev: *mut watchdog_device) -> i32 {\n    hrtimer_cancel(&mut TIMER);\n    let msg = b\"Called module_put()\\n\\0\";\n    printf(msg.as_ptr() as *const i8);\n    0\n}",
+    "calls": [],
+    "globals": [
+      {
+        "span": "lib.rs:41:1: 44:3 (#0)",
+        "source": "static mut TIMER: hrtimer = hrtimer {\n    dummy: 0,\n    function: None,\n};"
+      }
+    ],
+    "imports": [],
+    "chunks": []
+  },
+  {
+    "func_defid": "DefId(0:35 ~ softdog_rs[0217]::softdog_fire)",
+    "span": "lib.rs:95:1: 103:2 (#0)",
+    "pieces": [
+      "lib.rs:95:1: 103:2 (#0)"
+    ],
+    "sub_chunks": [],
+    "num_lines": 9,
+    "source": "pub unsafe extern \"C\" fn softdog_fire(_t: *mut hrtimer) -> i32 {\n    let msg = b\"CRIT: Watchdog will fire\\n\\0\";\n    printf(msg.as_ptr() as *const i8);\n    let msg2 = b\"Called module_put()\\n\\0\";\n    printf(msg2.as_ptr() as *const i8);\n    let panic_msg = b\"PANIC: Watchdog timer expired\\n\\0\";\n    printf(panic_msg.as_ptr() as *const i8);\n    exit(1);\n}",
+    "calls": [],
+    "globals": [],
+    "imports": [],
+    "chunks": []
+  }
+]
